@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('GIT') {
       steps {
-        git branch: 'anis', url: 'https://github.com/anisbm3/skiDevops.git'
+        git branch: 'subscription', url: 'https://github.com/anisbm3/skiDevops.git'
       }
     }
 
