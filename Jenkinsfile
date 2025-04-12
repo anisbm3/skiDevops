@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('GIT') {
       steps {
-        git branch: 'anis', url: 'https://github.com/anisbm3/jenkins.git'
+        git branch: 'anis', url: 'https://github.com/anisbm3/skiDevops.git'
       }
     }
     stage('Compile Stage') {
