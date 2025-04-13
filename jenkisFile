@@ -20,7 +20,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'saifMeddeb', url: 'https://github.com/saifGt/4twin2-skyStation.git'
+                git branch: 'saifMeddeb', url: 'https://github.com/anisbm3/skiDevops.git'
             }
         }
 
