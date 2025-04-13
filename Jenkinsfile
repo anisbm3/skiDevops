@@ -13,9 +13,10 @@ pipeline {
       }
     }
 
-stage('Git Fetch') {
+stage('Git Clean and Fetch') {
   steps {
-    sh 'git fetch --all --prune'
+    sh 'git clean -fdx' // Supprime tous les fichiers non suivis
+    sh 'git fetch --all --prune' // Force la récupération de toutes les branches
   }
 }
 
