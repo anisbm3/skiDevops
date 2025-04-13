@@ -33,7 +33,7 @@ pipeline {
     		}
 	    }*/
 	  
-	stage('Docker Image Stage') {
+	/*stage('Docker Image Stage') {
     steps {
         sh """
             # Login to Docker
@@ -46,6 +46,6 @@ pipeline {
             docker push anisbm3/anisbenmehrez-4twin2-g4-stationski:new-tag
         """
     }
-} 
+} */
   }
 }
