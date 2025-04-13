@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -10,14 +11,14 @@
 
     <groupId>tn.esprit.spring</groupId>
     <artifactId>gestion-station-ski</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-${BUILD_NUMBER}</version> <!-- Utiliser un numéro de build unique -->
     <name>gestion-station-ski</name>
     <description>Demo project for Spring Boot</description>
 
-   <properties>
-    <project.version>1.0-${BUILD_NUMBER}</project.version>
-</properties>
-<version>${project.version}</version>
+    <properties>
+        <java.version>1.8</java.version>
+        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+    </properties>
 
     <repositories>
         <repository>
@@ -87,5 +88,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
