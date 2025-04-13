@@ -12,6 +12,13 @@ pipeline {
         cleanWs() // nettoyage complet du répertoire
       }
     }
+    stage('GIT') {
+  steps {
+    sh 'git fetch --all --force'
+    sh 'git reset --hard origin/FaresJerbi-4TWIN2-G4' // Si tu souhaites récupérer ta branche spécifique
+  }
+}
+
 
     stage('Checkout') {
       steps {
