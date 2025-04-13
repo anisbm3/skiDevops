@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('GIT') {
             steps {
-                git branch: 'piste', url: 'https://github.com/anisbm3/skiDevops.git'
+                git branch: 'BorgiEmna-4TWIN2', url: 'https://github.com/anisbm3/skiDevops.git'
             }
         }
 
