@@ -10,14 +10,14 @@
 
     <groupId>tn.esprit.spring</groupId>
     <artifactId>gestion-station-ski</artifactId>
-    <version>1.0</version> <!-- Utiliser un numéro de build unique -->
+    <version>1.0-SNAPSHOT</version>
     <name>gestion-station-ski</name>
     <description>Demo project for Spring Boot</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-    </properties>
+   <properties>
+    <project.version>1.0-${BUILD_NUMBER}</project.version>
+</properties>
+<version>${project.version}</version>
 
     <repositories>
         <repository>
