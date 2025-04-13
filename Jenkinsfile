@@ -8,6 +8,9 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('sonar-global-token-id') // Remplacez 'sonar-global-token-id' par l'ID de votre credential Jenkins
+        DOCKER_IMAGE_NAME = 'emnaaaaaaa/borgiemna-grp4-ski'
+        DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials-id' // Remplacez par l'ID de vos credentials Docker Hub
     }
 
     stages {
@@ -32,6 +35,27 @@ pipeline {
         stage('MVN Nexus') {
             steps {
                 sh 'mvn deploy -Dmaven.test.skip=true'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
+                sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest"
+            }
+        }
+
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                script {
+                    // Authentification Docker Hub
+                    withCredentials([usernamePassword(credentialsId: env.DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:latest"
+                        sh "docker logout"
+                    }
+                }
             }
         }
     }
