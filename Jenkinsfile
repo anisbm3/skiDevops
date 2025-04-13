@@ -32,18 +32,6 @@ pipeline {
     			sh 'mvn deploy -Dmaven.test.skip=true'
     		}
 	    }
-	  stage('Docker Image Stage') {
-    steps {
-        sh """
-            # Login to Docker
-            docker login -u anisbm3 -p 25/01/2003
-            
-            # Tag the already built image with a new tag
-            docker tag anisbm3/anisbenmehrez-4twin2-g4-stationski:1.0.0 anisbm3/anisbenmehrez-4twin2-g4-stationski:new-tag
-            
-            # Push the image with the new tag
-            docker push anisbm3/anisbenmehrez-4twin2-g4-stationski:new-tag
-        """
-    }
+	 
   }
 }
