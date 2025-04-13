@@ -20,12 +20,12 @@ pipeline {
     }
 
  
- stage('SonarQube Analysis') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.token=squ_37442c9b66302494fe1347842cf5c9d285343b99 -Dmaven.test.skip=true';
-            }
-    }
+stage('MVN SONARQUBE') {
+      steps {
+        withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+          sh "mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dmaven.test.skip=true"
+        }
       }
     }
-  
+  }
 }
