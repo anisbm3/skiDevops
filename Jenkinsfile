@@ -7,6 +7,12 @@ pipeline {
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
   stages {
+    stage('Clean Workspace') {
+    steps {
+        cleanWs()
+    }
+}
+
     stage('GIT') {
       steps {
         git branch: 'FaresJerbi-4TWIN2-G4', url: 'https://github.com/anisbm3/skiDevops.git'
