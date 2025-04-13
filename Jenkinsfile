@@ -13,6 +13,11 @@ pipeline {
       }
     }
 
+stage('Git Fetch') {
+  steps {
+    sh 'git fetch --all --prune'
+  }
+}
 
 
 
