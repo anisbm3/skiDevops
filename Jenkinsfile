@@ -23,7 +23,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) 
         }
-      }
+      
     }
   }
 }
