@@ -27,6 +27,9 @@ stage('Git Clean and Fetch') {
         sh 'mvn clean compile'
       }
     }
+catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+    // instructions
+}
 
     stage('MVN SONARQUBE') {
       steps {
