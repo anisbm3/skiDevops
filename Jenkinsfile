@@ -6,19 +6,25 @@ pipeline {
     PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
   }
 
-  stages {
-    stage('Clean Workspace') {
-      steps {
-        cleanWs()
-      }
+stages {
+  stage('Clean Workspace') {
+    steps {
+      cleanWs()
     }
+  }
 
-    stage('Git Clean and Fetch') {
-      steps {
-        sh 'git clean -fdx'
-        sh 'git fetch --all --prune'
-      }
+  stage('Checkout') {
+    steps {
+      checkout scm
     }
+  }
+
+  stage('Git Clean and Fetch') {
+    steps {
+      sh 'git clean -fdx'
+      sh 'git fetch --all --prune'
+    }
+  }
 
     stage('Build') {
       steps {
