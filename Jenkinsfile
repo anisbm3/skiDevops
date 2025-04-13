@@ -12,27 +12,9 @@ pipeline {
         cleanWs() // nettoyage complet du répertoire
       }
     }
-    stage('GIT') {
-  steps {
-    sh 'git fetch --all --force'
-    sh 'git reset --hard origin/FaresJerbi-4TWIN2-G4' // Si tu souhaites récupérer ta branche spécifique
-  }
-}
 
 
-    stage('Checkout') {
-      steps {
-        // Forcer un clean checkout au cas où Jenkins garde des références cassées
-        checkout([$class: 'GitSCM',
-          branches: [[name: '*/FaresJerbi-4TWIN2-G4']],
-          userRemoteConfigs: [[url: 'https://github.com/anisbm3/skiDevops.git']],
-          extensions: [
-            [$class: 'WipeWorkspace'],           // nettoyage du workspace
-            [$class: 'CleanBeforeCheckout']      // nettoyage Git
-          ]
-        ])
-      }
-    }
+
 
     stage('Compile Stage') {
       steps {
