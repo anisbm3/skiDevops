@@ -15,7 +15,7 @@ environment {
         git branch: 'FaresJerbi-4TWIN2-G4 ', url: 'https://github.com/anisbm3/skiDevops.git'
       }
     }
- stages {
+
     stage('Env Check') {
       steps {
         sh 'echo JAVA_HOME=$JAVA_HOME'
