@@ -31,7 +31,6 @@ stage('Git Clean and Fetch') {
     stage('MVN SONARQUBE') {
       steps {
         withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-          // ⚠️ Sécurité : utiliser simple quotes autour de la commande pour éviter l’interpolation groovy
           sh '''mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dmaven.test.skip=true'''
         }
       }
