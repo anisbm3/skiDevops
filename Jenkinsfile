@@ -31,7 +31,7 @@ pipeline {
 
         stage('MVN Nexus') {
             steps {
-                sh 'mvn deploy -Dmaven.test.skip=true -DaltDeploymentRepository=your-repository-id::default::https://your.repository.url/path'
+                sh 'mvn deploy -Dmaven.test.skip=true -s /usr/share/maven/conf/settings.xml'
             }
         }
     }
