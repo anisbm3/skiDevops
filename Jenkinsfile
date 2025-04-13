@@ -1,14 +1,11 @@
 pipeline {
   agent any
 
-  tools {
+tools {
     jdk 'JAVA_HOME'
     maven 'M2_HOME'
   }
-environment {
-  JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
-  PATH = "${JAVA_HOME}/bin:${env.PATH}"
-}
+
   stages {
     stage('GIT') {
       steps {
@@ -16,20 +13,11 @@ environment {
       }
     }
 
-    stage('Check Java') {
-      steps {
-        sh 'echo JAVA_HOME=$JAVA_HOME'
-        sh '$JAVA_HOME/bin/java -version'
-        sh '$JAVA_HOME/bin/javac -version'
-      }
-    }
-
-    stage('Compile') {
+    stage('Compile Stage') {
       steps {
         sh 'mvn clean compile'
       }
     }
-  
 
     stage('MVN SONARQUAR'){
     		steps {
