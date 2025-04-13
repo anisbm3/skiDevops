@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   tools {
-    jdk 'JAVA_HOME'
+    JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
     maven 'M2_HOME'
   }
 
