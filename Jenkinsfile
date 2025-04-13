@@ -9,25 +9,24 @@ pipeline {
   stages {
     stage('Clean Workspace') {
       steps {
-        cleanWs() // nettoyage complet du répertoire
+        cleanWs()
       }
     }
 
-stage('Git Clean and Fetch') {
-  steps {
-    sh 'git clean -fdx' // Supprime tous les fichiers non suivis
-    sh 'git fetch --all --prune' // Force la récupération de toutes les branches
-  }
-}
- stages {
-        stage('Build') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'mvn clean install'
-                }
-            }
-        }
+    stage('Git Clean and Fetch') {
+      steps {
+        sh 'git clean -fdx'
+        sh 'git fetch --all --prune'
+      }
+    }
 
+    stage('Build') {
+      steps {
+        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+          sh 'mvn clean install'
+        }
+      }
+    }
 
     stage('Compile Stage') {
       steps {
@@ -38,7 +37,7 @@ stage('Git Clean and Fetch') {
     stage('MVN SONARQUBE') {
       steps {
         withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-          sh '''mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dmaven.test.skip=true'''
+          sh 'mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dmaven.test.skip=true'
         }
       }
     }
