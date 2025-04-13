@@ -29,21 +29,6 @@ pipeline {
             }
         }
 
-        stage('Modify pom.xml') {
-            steps {
-                sh '''
-                echo "
-                <distributionManagement>
-                    <repository>
-                        <id>deploymentRepo</id>
-                        <url>https://your.repository.url/path</url>
-                    </repository>
-                </distributionManagement>
-                " >> pom.xml
-                '''
-            }
-        }
-
         stage('MVN Nexus') {
             steps {
                 sh 'mvn deploy -Dmaven.test.skip=true'
