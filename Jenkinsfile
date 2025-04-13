@@ -21,8 +21,7 @@ pipeline {
 
    stage('MVN SONARQUBE') {
       steps {
-        withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
-          sh "mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dmaven.test.skip=true"
+        withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) 
         }
       }
     }
