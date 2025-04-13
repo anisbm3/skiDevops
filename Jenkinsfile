@@ -19,7 +19,14 @@ stage('Git Clean and Fetch') {
     sh 'git fetch --all --prune' // Force la récupération de toutes les branches
   }
 }
-
+ stages {
+        stage('Build') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    sh 'mvn clean install'
+                }
+            }
+        }
 
 
     stage('Compile Stage') {
@@ -27,9 +34,6 @@ stage('Git Clean and Fetch') {
         sh 'mvn clean compile'
       }
     }
-catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-    // instructions
-}
 
     stage('MVN SONARQUBE') {
       steps {
