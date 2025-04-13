@@ -28,10 +28,11 @@ pipeline {
                 sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dmaven.test.skip=true'
             }
         }
-        stage('MVN Nexus'){
-    		steps {
-    			sh 'mvn deploy -Dmaven.test.skip=true'
-    		}
-	    }
+
+        stage('MVN Nexus') {
+            steps {
+                sh 'mvn deploy -Dmaven.test.skip=true -DaltDeploymentRepository=your-repository-id::default::https://your.repository.url/path'
+            }
+        }
     }
 }
