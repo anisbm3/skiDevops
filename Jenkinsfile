@@ -68,8 +68,8 @@ stage('Deploy with Docker Compose') {
                     sed -i 's|image: emnaaaaaaa/borgiemna-five-as-projet-ski:.*|image: ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}|' docker-compose.yml
                     """
 
-                    sh 'docker-compose down'
-                    sh 'docker-compose up -d'
+                    sh 'docker compose down'
+                    sh 'docker compose up -d'
                 }
             }
         }
