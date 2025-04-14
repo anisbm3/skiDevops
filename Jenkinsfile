@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('sonar-global-token-id')
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials-id'
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials-id'  // Use the ID you configured in Jenkins
         DOCKER_IMAGE_NAME = 'emnaaaaaaa/borgiemna-five-as-projet-ski'
         DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
     }
@@ -50,11 +50,8 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    // Pass the build number as a build argument
-                    sh "docker build --build-arg BUILD_NUMBER=${BUILD_NUMBER} -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
-                    sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest"
-                }
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
+                sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest"
             }
         }
 
