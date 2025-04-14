@@ -33,7 +33,11 @@ stages {
         }
       }
     }
-
+  stage('GIT') {
+      steps {
+        git branch: 'FaresJerbi-4TWIN2-G4', url: 'https://github.com/anisbm3/skiDevops.git'
+      }
+    }
     stage('Compile Stage') {
       steps {
         sh 'mvn clean compile'
