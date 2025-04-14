@@ -26,6 +26,18 @@ pipeline {
             }
         }
 
+        stage('Run Unit Tests') {
+      steps {
+        script {
+          try {
+            sh 'mvn test'
+          } catch (Exception e) {
+            echo "Tests failed: ${e.message}"
+          }
+        }
+      }
+    }
+
         stage('MVN SONARQUBE') {
             steps {
                 sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dmaven.test.skip=true'
