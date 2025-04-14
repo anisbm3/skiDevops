@@ -10,7 +10,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar-global-token-id')
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials-id'
         DOCKER_IMAGE_NAME = 'emnaaaaaaa/borgiemna-five-as-projet-ski'
-        DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
+        DOCKER_IMAGE_TAG = '1.0.0'  // Utilisez la version fixe ici
     }
 
     stages {
