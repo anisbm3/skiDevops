@@ -62,19 +62,27 @@ pipeline {
         """
       }
     }
-        stage('Run Docker Compose') {
-      steps {
-        sh """
-          echo "Démarrage des services avec Docker Compose..."
+stage('Run Docker Compose') {
+  steps {
+    sh '''
+      echo "🔧 Démarrage des services avec Docker Compose..."
 
-          # Lancer les services définis dans docker-compose.yml
-          docker-compose up -d
-
-          # Afficher l’état des services
-          docker-compose ps
-        """
-      }
-    }
+      # Vérifie quelle commande est disponible
+      if command -v docker compose > /dev/null; then
+        echo "✅ Utilisation de 'docker compose'"
+        docker compose up -d
+        docker compose ps
+      elif command -v docker-compose > /dev/null; then
+        echo "✅ Utilisation de 'docker-compose'"
+        docker-compose up -d
+        docker-compose ps
+      else
+        echo "❌ Ni 'docker compose' ni 'docker-compose' ne sont disponibles."
+        exit 1
+      fi
+    '''
+  }
+}
 
   }
 }
