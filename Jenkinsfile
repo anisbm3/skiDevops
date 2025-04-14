@@ -62,5 +62,19 @@ pipeline {
         """
       }
     }
+        stage('Run Docker Compose') {
+      steps {
+        sh """
+          echo "Démarrage des services avec Docker Compose..."
+
+          # Lancer les services définis dans docker-compose.yml
+          docker-compose up -d
+
+          # Afficher l’état des services
+          docker-compose ps
+        """
+      }
+    }
+
   }
 }
