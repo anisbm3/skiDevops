@@ -1,21 +1,14 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JAVA_HOME'
-        maven 'M2_HOME'
-    }
-
     environment {
-        SONAR_TOKEN = credentials('sonar-global-token-id')
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials-id'
-        DOCKER_IMAGE = 'emnaaaaaaa/borgiemna-five-as-projet-ski'
+        DOCKER_CREDENTIALS = credentials('docker-credentials-id')
     }
 
     stages {
-        stage('GIT') {
+        stage('Checkout SCM') {
             steps {
-                git branch: 'BorgiEmna-4TWIN2', url: 'https://github.com/anisbm3/skiDevops.git'
+                checkout scm
             }
         }
 
@@ -25,9 +18,11 @@ pipeline {
             }
         }
 
-        stage('MVN SONARQUBE') {
+        stage('MVN SonarQube') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dmaven.test.skip=true'
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    sh 'mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dmaven.test.skip=true'
+                }
             }
         }
 
@@ -37,19 +32,30 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t emnaaaaaaa/borgiemna-five-as-projet-ski:1.0.0 .'
+                }
+            }
+        }
+
         stage('Docker Image Stage') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: env.DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh """
-                            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                            docker tag ${DOCKER_IMAGE}:latest ${DOCKER_IMAGE}:new-tag
-                            docker push ${DOCKER_IMAGE}:new-tag
-                            docker logout
-                        """
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials-id', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'docker tag emnaaaaaaa/borgiemna-five-as-projet-ski:latest emnaaaaaaa/borgiemna-five-as-projet-ski:new-tag'
+                        sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin'
+                        sh 'docker push emnaaaaaaa/borgiemna-five-as-projet-ski:new-tag'
                     }
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
