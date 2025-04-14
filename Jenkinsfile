@@ -9,7 +9,8 @@ pipeline {
     environment {
         SONAR_TOKEN = credentials('sonar-global-token-id')
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials-id'
-        DOCKER_IMAGE = 'emnaaaaaaa/borgiemna-five-as-projet-ski'
+        DOCKER_IMAGE_NAME = 'emnaaaaaaa/borgiemna-five-as-projet-ski'
+        DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
@@ -37,18 +38,23 @@ pipeline {
             }
         }
 
-        stage('Docker Image Stage') {
+        stage('Docker Login') {
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: env.DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh """
-                            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                            docker tag ${DOCKER_IMAGE}:1.0.0 ${DOCKER_IMAGE}:new-tag
-                            docker push ${DOCKER_IMAGE}:new-tag
-                            docker logout
-                        """
-                    }
-                }
+                sh 'echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin'
+            }
+        }
+
+       stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
+                sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest"
+            }
+        }
+
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                sh "docker push ${DOCKER_IMAGE_NAME}:latest"
             }
         }
     }
