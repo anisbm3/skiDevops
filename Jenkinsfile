@@ -61,5 +61,37 @@ pipeline {
                 sh "docker push ${DOCKER_IMAGE_NAME}:latest"
             }
         }
+stage('Deploy with Docker Compose') {
+            steps {
+                script {
+                    sh """
+                    sed -i 's|image: emnaaaaaaa/borgiemna-five-as-projet-ski:.*|image: ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}|' docker-compose.yml
+                    """
+
+                    sh 'docker-compose down'
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                sh 'docker-compose down'
+                sh 'docker system prune -f'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout'
+            cleanWs()
+        }
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline execution failed!'
+        }
     }
 }
