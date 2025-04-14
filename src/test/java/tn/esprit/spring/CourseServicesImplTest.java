@@ -66,9 +66,9 @@ class CourseServicesImplTest {
 
         List<Course> courses = Arrays.asList(course, course2);
         when(courseRepository.findAll()).thenReturn(courses);
-        // When
+        
         List<Course> result = courseServices.retrieveAllCourses();
-        // Then
+
         assertNotNull(result);
         assertEquals(2, result.size());
         assertTrue(result.contains(course));
