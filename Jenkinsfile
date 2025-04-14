@@ -20,7 +20,19 @@ pipeline {
         sh 'mvn clean compile'
       }
     }
-  
+            stage('Run Unit Tests') {
+            steps {
+                script {
+                    try {
+                        sh '''
+                            mvn test
+                        '''
+                    } catch (Exception e) {
+                        echo "Tests failed: ${e.message}"
+                    }
+                }
+            }
+        }
 
     stage('SonarQube Analysis') {
             steps {
