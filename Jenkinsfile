@@ -76,7 +76,7 @@ stage('Deploy with Docker Compose') {
 
         stage('Cleanup') {
             steps {
-                sh 'docker-compose down'
+                sh 'docker compose down'
                 sh 'docker system prune -f'
             }
         }
