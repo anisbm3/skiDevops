@@ -2,6 +2,7 @@ pipeline {
   agent any
 
   environment {
+    SONAR_TOKEN = credentials('sonar-token')
     JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
     PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
   }
