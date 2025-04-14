@@ -4,7 +4,7 @@ global:
 scrape_configs:
   - job_name: 'jenkins'
     static_configs:
-      - targets: ['host.docker.internal:8080']
+      - targets: ['192.168.33.1:8080']
 
   - job_name: 'spring-boot-app'
     static_configs:
