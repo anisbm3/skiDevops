@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-credentials-id', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'docker tag emnaaaaaaa/borgiemna-five-as-projet-ski:latest emnaaaaaaa/borgiemna-five-as-projet-ski:new-tag'
+                        sh 'docker tag emnaaaaaaa/borgiemna-five-as-projet-ski:1.0.0 emnaaaaaaa/borgiemna-five-as-projet-ski:new-tag'
                         sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin'
                         sh 'docker push emnaaaaaaa/borgiemna-five-as-projet-ski:new-tag'
                     }
@@ -55,7 +55,9 @@ pipeline {
 
     post {
         always {
-            sh 'docker logout'
+            node {
+                sh 'docker logout'
+            }
         }
     }
 }
