@@ -30,25 +30,23 @@ pipeline {
             }
         }
 
-          stage('Run Unit Tests') {
-            steps {
-                script {
-                    try {
-                        sh '''
-                            mvn test
-                        '''
-                    } catch (Exception e) {
-                        echo "Tests failed: ${e.message}"
-                    }
-                }
-            }
+         stage('Run Unit Tests with Coverage') {
+           steps {
+        sh 'mvn clean verify'
+         }
         }
 
+
        stage('SonarQube Analysis') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.token=squ_a00c5e4f4a5e7c215ec4200efcd5e854ef328705 -Dmaven.test.skip=true'
-            }
-        }
+    steps {
+        sh '''
+            mvn sonar:sonar \
+              -Dsonar.token=squ_a00c5e4f4a5e7c215ec4200efcd5e854ef328705 \
+              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+        '''
+    }
+}
+
 
         stage('Deploy to Nexus') {
             steps {
