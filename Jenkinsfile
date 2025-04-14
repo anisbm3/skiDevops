@@ -92,16 +92,6 @@ stage('Deploy with Docker Compose') {
                 sh 'docker system prune -f'
             }
         }
-
-        stage('Monitoring Stack (Prometheus & Grafana)') {
-    steps {
-        script {
-            echo 'Démarrage de Prometheus et Grafana pour la surveillance continue'
-            sh 'docker compose -f monitoring-compose.yml up -d'
-        }
-    }
-}
-
     }
 
     post {
