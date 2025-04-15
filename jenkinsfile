@@ -4,6 +4,9 @@ pipeline {
     environment {
         JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
+         NEXUS_REPO_URL = "http://127.0.0.1:8081/repository/maven-releases/"
+        MAVEN_SETTINGS = "/usr/share/maven/conf/settings.xml"
+
     }
 
     stages {
@@ -26,11 +29,20 @@ pipeline {
             }
         }
 
-        stage('MVN Nexus') {
-              steps {
-                sh 'mvn deploy -Dmaven.test.skip=true'
-              }
+          stage('Deploy to Nexus') {
+            steps {
+                script {
+                    try {
+                        sh '''
+                            mvn deploy --settings ${MAVEN_SETTINGS} -DskipTests
+                        '''
+                    } catch (Exception e) {
+                        echo "Deployment to Nexus failed: ${e.message}"
+                        throw e
+                    }
+                }
             }
+        }
 
         stage('Run Unit Tests') {
             steps {
