@@ -9,7 +9,7 @@ pipeline {
 
   DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
 
-        DOCKER_IMAGE_NAME = 'balsemkh/balsemKhouni4twin2g4'
+        DOCKER_IMAGE_NAME = 'balsemkh/balsemkhouni4twin2g4'
         DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
 
     }
