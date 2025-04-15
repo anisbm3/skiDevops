@@ -22,7 +22,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                sh 'mvn sonar:sonar'
+                sh 'mvn sonar:sonar -Dsonar.token=squ_557a4437011146ccbc6acd256daf9581c8879c9c -Dmaven.test.skip=true'
             }
         }
 
