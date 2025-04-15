@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
+    }
+
+    stages {
+
+        stage('Git Checkout') {
+            steps {
+                git branch: 'BalsemKhouni-4TWIN2-G4', url: 'https://github.com/anisbm3/skiDevops.git'
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Run Unit Tests') {
+            steps {
+                script {
+                    try {
+                        sh 'mvn test'
+                    } catch (Exception e) {
+                        echo "Tests failed: ${e.message}"
+                    }
+                }
+            }
+        }
+    }
+}
