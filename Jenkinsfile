@@ -5,6 +5,7 @@ pipeline {
     SONAR_TOKEN = credentials('sonar-token')
     JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
     PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+     DOCKER_IMAGE_NAME = 'faresjerbi/faresjerbi4twin2skidevops'
   }
 
 stages {
