@@ -26,6 +26,12 @@ pipeline {
             }
         }
 
+        stage('MVN Nexus') {
+              steps {
+                sh 'mvn deploy -Dmaven.test.skip=true'
+              }
+            } 
+
         stage('Run Unit Tests') {
             steps {
                 script {
