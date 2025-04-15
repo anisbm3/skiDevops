@@ -5,9 +5,7 @@ pipeline {
     SONAR_TOKEN = credentials('sonar-token')
     JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
     PATH = "${JAVA_HOME}/bin:${env.PATH}"
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-    DOCKER_IMAGE_NAME = 'faresjerbi/faresjerbi4twin2skidevops'
-    DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
+  *
   }
 
   stages {
@@ -62,17 +60,6 @@ pipeline {
       }
     }
 
-    stage('Docker Login') {
-      steps {
-        sh 'echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin'
-      }
-    }
-
-    stage('Build Docker Image') {
-      steps {
-        sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
-        sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest"
-      }
-    }
+   
   }
 }
